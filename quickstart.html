@@ -3,10 +3,53 @@
     <script type="text/javascript">
       // Your Client ID can be retrieved from your project in the Google
       // Developer Console, https://console.developers.google.com
-      var CLIENT_ID = '<YOUR_CLIENT_ID>';
+      var CLIENT_ID = '546689066883-58r86u6ciuqcib0rtb1f9f9s4rm3t16k.apps.googleusercontent.com';
 
-      var SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
+      var SCOPES = ["https://www.googleapis.com/auth/calendar"];
+function handleAuthClick1(event) {
+var summary=document.getElementById('summary').value;
+    var location=document.getElementById('location').value;
+    var description=document.getElementById('description').value;
+    var dateTime=document.getElementById('dateTime').value;
+  
+         var event = {
+  'summary': summary,
+  'location': location,
+  'description': description,
+  'start': {
+    'dateTime': dateTime,
+    'timeZone': 'America/Los_Angeles'
+  },
+  'end': {
+    'dateTime': '2015-11-28T17:00:00-07:00',
+    'timeZone': 'America/Los_Angeles'
+  },
+  'recurrence': [
+    'RRULE:FREQ=DAILY;COUNT=2'
+  ],
+  'attendees': [
+    {'email': 'liharsharma910@gmail.com'},
+    {'email': 'sbrin@example.com'}
+  ],
+  'reminders': {
+    'useDefault': false,
+    'overrides': [
+      {'method': 'email', 'minutes': 24 * 60},
+      {'method': 'popup', 'minutes': 10}
+    ]
+  }
+};
 
+var request = gapi.client.calendar.events.insert({
+  'calendarId': 'primary',
+  'resource': event
+});
+
+request.execute(function(event) {
+  appendPre('Event created: ' + event.htmlLink);
+});
+        return false;
+      }
       /**
        * Check if current user has authorized this application.
        */
@@ -68,7 +111,7 @@
           'timeMin': (new Date()).toISOString(),
           'showDeleted': false,
           'singleEvents': true,
-          'maxResults': 10,
+          'maxResults': 1000,
           'orderBy': 'startTime'
         });
 
@@ -115,7 +158,20 @@
       <button id="authorize-button" onclick="handleAuthClick(event)">
         Authorize
       </button>
-    </div>
+     </div>
+    <div> 
+
+    Summary: <input type="text" id="summary" name="dateTime"><br>
+  location: <input type="text" id="location" name="rText"><br>
+   description: <input type="text" id="description" name="dateTime"><br>
+  dateTime in format 2015-11-28T09:00:00-07:00: <input type="text" id="dateTime" name="rText"><br>
+  
+ 
+<button id="authorize-button1" onclick="handleAuthClick1(event)">
+        Authorize
+      </button>
+      </div>
+
     <pre id="output"></pre>
   </body>
 </html>
