@@ -1,2 +1,2 @@
 # GoogleCalendarNodeExample
-Using google calendar api with node js as backend,
+Using google calendar api with  javascript -------- can add new event,
